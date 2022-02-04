@@ -1,0 +1,17 @@
+{
+  "name": "weather-bot",
+  "version": "1.0.0",
+  "description": "天气小助手",
+  "main": "app.js",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "axios": "^0.25.0",
+    "node-telegram-bot-api": "^0.56.0"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/node-telegram-bot-api": "^0.53.6",
+    "nodemon": "^2.0.15"
+  }
+}
