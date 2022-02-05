@@ -37,6 +37,13 @@ async function getImage(url) {
     req.method = 'get'
     return await req.loadImage()
 }
+function zeroPad(numToPad) {
+    if (numToPad > 9) {
+        return numToPad
+    } else {
+        return `0${numToPad}`
+    }
+}
 /**
  * 渲染数据加载失败小组件
  * @returns widget object
@@ -81,6 +88,15 @@ async function renderSmallWidget(list) {
         chn_img.imageSize = new Size(16, 16)
         chn_cn.font = Font.boldSystemFont(14)
         chn_count.font = Font.boldSystemFont(14)
+
+        let updateTimeArea = widget.addStack()
+        let reloadSymbol = SFSymbol.named("arrow.triangle.2.circlepath")
+        let reloadImage = updateTimeArea.addImage(reloadSymbol.image)
+        reloadImage.imageSize = new Size(8, 8)
+        let now = new Date()
+        let updateTime = updateTimeArea.addText(`  ${zeroPad(now.getMonth() + 1)}-${zeroPad(now.getDate())} ${zeroPad(now.getHours())}:${zeroPad(now.getMinutes())}`)
+        updateTime.font = Font.systemFont(8)
+        updateTime.rightAlignText()
         return widget
     } else {
         return await renderErr()
@@ -95,14 +111,33 @@ async function renderMediumWidget(list) {
     if (list) {
         let widget = new ListWidget()
         let header = widget.addStack()
-        let _icon = header.addImage(await getImage('https://i.imgur.com/O18bIfm.png'))
+
+        let titleArea = header.addStack()
+        let infoArea = header.addStack()
+        infoArea.layoutVertically()
+
+        let _icon = titleArea.addImage(await getImage('https://i.imgur.com/O18bIfm.png'))
         _icon.imageSize = new Size(20, 22)
-        let _title = header.addText(' 北京冬奥会奖牌榜')
+        let _title = titleArea.addText(' 北京冬奥会奖牌榜')
         _title.font = Font.boldSystemFont(16)
-        let _info = header.addText('      数据来自于CCTV')
+
+
+        let _info = infoArea.addText('      数据来自于CNTV')
         _info.font = Font.systemFont(10)
-        _info.rightAlignText()
+        _info.centerAlignText()
         _info.textOpacity = 0.7
+
+        let updateTimeArea = infoArea.addStack()
+        updateTimeArea.addText('    ')
+        let reloadSymbol = SFSymbol.named("arrow.triangle.2.circlepath")
+        let reloadImage = updateTimeArea.addImage(reloadSymbol.image)
+        reloadImage.imageSize = new Size(10, 10)
+
+        let now = new Date()
+        let _time = updateTimeArea.addText(` ${zeroPad(now.getMonth() + 1)}-${zeroPad(now.getDate())} ${zeroPad(now.getHours())}:${zeroPad(now.getMinutes())}`)
+        _time.font = Font.systemFont(10)
+        _time.centerAlignText()
+        _time.textOpacity = 0.7
         widget.addSpacer(5)
         let body = widget.addStack()
         let countryFlagList = body.addStack()
