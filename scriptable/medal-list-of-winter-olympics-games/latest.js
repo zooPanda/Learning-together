@@ -116,7 +116,7 @@ async function renderMediumWidget(list) {
         let infoArea = header.addStack()
         infoArea.layoutVertically()
 
-        let _icon = titleArea.addImage(await getImage('https://i.imgur.com/O18bIfm.png'))
+        let _icon = titleArea.addImage(await getImage('https://s2.loli.net/2022/02/06/RPeQqYBf9UOFJDr.png'))
         _icon.imageSize = new Size(20, 22)
         let _title = titleArea.addText(' 北京冬奥会奖牌榜')
         _title.font = Font.boldSystemFont(16)
@@ -152,10 +152,10 @@ async function renderMediumWidget(list) {
         silverList.layoutVertically()
         bronzeList.layoutVertically()
         countList.layoutVertically()
-        let goldFlag = await getImage(`https://i.imgur.com/GnqEcWx.png`)
-        let silverFlag = await getImage(`https://i.imgur.com/nyE2c1u.png`)
-        let bronzeFlag = await getImage(`https://i.imgur.com/NQSJF3D.png`)
-        let countFlag = await getImage('https://i.imgur.com/hnlsyAu.png')
+        let goldFlag = await getImage(`https://s2.loli.net/2022/02/06/uEUB1vcfsdl6Wtq.png`)
+        let silverFlag = await getImage(`https://s2.loli.net/2022/02/06/AKxfijm9tT5uXvk.png`)
+        let bronzeFlag = await getImage(`https://s2.loli.net/2022/02/06/5AyV1ci6kCL2qKF.png`)
+        let countFlag = await getImage('https://s2.loli.net/2022/02/06/YbKliGSanQWIdOZ.png')
         for (let i = 0; i < 4; i++) {
             // 渲染国旗
             let img = countryFlagList.addImage(await getImage(`https://p1.img.cctvpic.com/sports/data/olympic/teamImg/${list[i].countryid}.png`))
@@ -238,8 +238,9 @@ async function init() {
             Script.setWidget(widget)
             Script.complete()
         } else {
-            let w = await renderMediumWidget(await getDate())
-            w.presentMedium()
+            widget = await renderMediumWidget(data)
+            widget.presentMedium()
+            Script.setWidget(widget)
             Script.complete()
         }
     } catch (error) { Script.complete() }
