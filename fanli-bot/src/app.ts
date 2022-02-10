@@ -8,6 +8,17 @@ const UNION_ID = '';//抓取你自己的京东联盟ID
 
 const bot = new TelegramBot(BOT_TOKEN, { polling: true })
 
+/**
+ * 监听开始命令
+ */
+bot.onText(/\/start/, async msg => {
+    try {
+        await bot.sendMessage(msg.from.id, '京东转链，请回复【转链 你需要转链的商品地址】来获取返利信息')
+    } catch (error) {
+        console.log('/start', error);
+    }
+})
+
 bot.onText(/^转链 /, async msg => {
     const { text } = msg
     try {
@@ -40,9 +51,7 @@ bot.onText(/^转链 /, async msg => {
         bot.sendMessage(msg.chat.id, "发生了无法预料的错误，请检查程序。").catch(err => {
             console.log(err);
         })
-
     }
-
 })
 
 async function converUrl(url: string) {
