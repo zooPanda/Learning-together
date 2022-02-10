@@ -18,7 +18,9 @@ bot.onText(/\/start/, async msg => {
         console.log('/start', error);
     }
 })
-
+/**
+ * 监听转链请求
+ */
 bot.onText(/^转链 /, async msg => {
     const { text } = msg
     try {

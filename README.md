@@ -88,4 +88,6 @@
 
 ## 写点儿东西
 
- - [天气小助手](https://github.com/zooPanda/Learning-together/blob/dev/weather-bot/README.md) - Telegram bot 机器人
+ - [天气小助手](https://github.com/zooPanda/Learning-together/blob/dev/weather-bot/README.md)
+
+ - [京东返利机器人](https://github.com/zooPanda/Learning-together/blob/dev/fanli-bot/README.md)
