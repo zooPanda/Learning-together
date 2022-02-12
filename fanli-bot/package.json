@@ -6,7 +6,10 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.25.0",
-    "node-telegram-bot-api": "^0.56.0"
+    "https-proxy-agent": "^5.0.0",
+    "node-telegram-bot-api": "^0.56.0",
+    "telegraf": "^4.7.0",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
