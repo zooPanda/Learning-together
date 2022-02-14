@@ -1,6 +1,6 @@
-import { Telegraf } from 'telegraf';
+import {Telegraf} from 'telegraf';
 import axios from 'axios';
-import { URL } from 'url';
+import {URL} from 'url';
 
 const HttpsProxyAgent = require('https-proxy-agent');
 const BOT_TOKEN = '';//你申请到的bot token
@@ -11,15 +11,20 @@ const config = {
     clientSecret: '', //你的应用Secret
     searchValue: 'JD_COOKIE',
     index: 1, //默认获取第一个 cookie
+    agentHost: '127.0.0.1',//代理地址,没有就置空
+    agentPort: 7890  //代理端口，,没有就置空
 };
+let bot;
+if (config.agentHost && config.agentPort) {
+    const agent = new HttpsProxyAgent({
+        host: config.agentHost,
+        port: config.agentPort
+    });
+    bot = new Telegraf(BOT_TOKEN, {telegram: {agent}});
+} else {
+    bot = new Telegraf(BOT_TOKEN);
+}
 
-//代理地址，改成自己的
-const agent = new HttpsProxyAgent({
-    host: '127.0.0.1',
-    port: 7890
-});
-
-const bot = new Telegraf(BOT_TOKEN, { telegram: { agent } });
 bot.launch().then(r => {
     console.log('启动bot成功');
 });
@@ -40,7 +45,7 @@ bot.hears(/\/start/, ctx => {
  */
 bot.hears(/^(?:(http|https|ftp):\/\/)?((|[\w-]+\.)+[a-z0-9]+)(?:(\/[^/?#]+)*)?(\?[^#]+)?(#.+)?$/i, ctx => {
 
-    const { text } = ctx.message;
+    const {text} = ctx.message;
     try {
         let link = text.split(' ')[0];//将链接从消息中提取出来
         if (link) {//判断是否存在链接
@@ -50,8 +55,8 @@ bot.hears(/^(?:(http|https|ftp):\/\/)?((|[\w-]+\.)+[a-z0-9]+)(?:(\/[^/?#]+)*)?(\
                     if (linkInfo && linkInfo.code === 200) {//如果转链接结果是否存在
                         let replyMsg = linkInfo.data.formatContext + `预计佣金:¥${linkInfo.data.wlCommission}`;
                         if (linkInfo.data.imgList && linkInfo.data.imgList.length > 0) {//如果转链信息中包含图片
-                            ctx.replyWithPhoto({ url: `http://img14.360buyimg.com/n1/${linkInfo.data.imgList[0]}` },
-                                { caption: replyMsg });
+                            ctx.replyWithPhoto({url: `http://img14.360buyimg.com/n1/${linkInfo.data.imgList[0]}`},
+                                {caption: replyMsg});
                         } else {//转链结果中不存在图片，直接发送文件
                             ctx.reply(replyMsg);
                         }
@@ -80,14 +85,13 @@ bot.hears(/^(?:(http|https|ftp):\/\/)?((|[\w-]+\.)+[a-z0-9]+)(?:(\/[^/?#]+)*)?(\
 async function getCookie() {
     const url = `${config.url}/open/auth/token?client_id=${config.clientID}&client_secret=${config.clientSecret}`;
 
-    const { data } = await axios.get(url);
+    const {data} = await axios.get(url);
     const token = data.data.token;
     const evnResult = await axios.get(
         `${config.url}/open/envs?searchValue=${config.searchValue}&t=${new Date().getTime()}`,
-        { headers: { Authorization: 'Bearer ' + token } });
+        {headers: {Authorization: 'Bearer ' + token}});
 
     return evnResult.data.data[config.index - 1].value;
-
 
 
 }
@@ -119,7 +123,7 @@ async function converUrl(url: string) {
     return axios.get(reqLink.href, {
         headers: {
             Cookie,
-            "user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.18(0x1800122b) NetType/WIFI Language/zh_CN"
+            'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.18(0x1800122b) NetType/WIFI Language/zh_CN'
         }
     });
 
