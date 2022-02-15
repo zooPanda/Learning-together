@@ -34,7 +34,7 @@ bot.launch().then(r => {
  */
 bot.hears(/\/start/, ctx => {
     try {
-        ctx.reply('京东转链，请回复【转链 你需要转链的商品地址】来获取返利信息');
+        ctx.reply('京东转链，请回复商品 url 来获取返利信息，例如直接发送 https://item.jd.com/70241615154.html');
     } catch (error) {
         console.log('/start', error);
     }
