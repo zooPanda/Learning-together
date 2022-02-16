@@ -6,13 +6,13 @@ const HttpsProxyAgent = require('https-proxy-agent');
 const BOT_TOKEN = '';//你申请到的bot token
 const UNION_ID = '';//抓取你自己的京东联盟ID
 const config = {
-    url: 'http://127.0.0.1:5700',//青龙地址:端口
-    clientID: '',
-    clientSecret: '',
+    url: 'http://127.0.0.1:5700',//你的青龙地址:端口
+    clientID: '', //你的应用ID
+    clientSecret: '', //你的应用Secret
     searchValue: 'JD_COOKIE',
     index: 1, //默认获取第一个 cookie
-    agentHost: '127.0.0.1',
-    agentPort: 7890
+    agentHost: '127.0.0.1',//代理地址,没有就置空
+    agentPort: 7890  //代理端口，,没有就置空
 };
 
 let bot;
